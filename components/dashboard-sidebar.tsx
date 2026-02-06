@@ -3,6 +3,7 @@
 import type * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { signOut } from "next-auth/react"
 import {
   LayoutDashboard,
   Users,
@@ -66,7 +67,7 @@ export function DashboardSidebar({ role }: { role: Role }) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
+              <Link href={`/dashboard/${role}/overview`}>
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <GraduationCap className="size-5" />
                 </div>
@@ -101,11 +102,12 @@ export function DashboardSidebar({ role }: { role: Role }) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/login">
-                <LogOut />
-                <span>Sign Out</span>
-              </Link>
+            <SidebarMenuButton 
+              onClick={() => signOut({ callbackUrl: "/select-role" })}
+              className="cursor-pointer"
+            >
+              <LogOut />
+              <span>Sign Out</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
