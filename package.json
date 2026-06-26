@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "db:seed": "tsx prisma/seed.ts"
   },
+  "overrides": {
+  "@auth/core": "$@auth/core"
+  },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
     "@hookform/resolvers": "^3.10.0",
