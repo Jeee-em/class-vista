@@ -1,32 +1,35 @@
 import { Users, GraduationCap, ClipboardList, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { OverviewCharts } from "@/components/overview-charts"
+import { getAdminStats } from "@/lib/actions/admin"
 
-export default function AdminOverview() {
-  const stats = [
+export default async function AdminOverview() {
+  const stats = await getAdminStats()
+
+  const statItems = [
     {
       title: "Total Students",
-      value: "124",
+      value: stats.totalStudents.toString(),
       icon: Users,
-      description: "+4 from last month",
+      description: "Active students in system",
     },
     {
       title: "Average Score",
-      value: "82.4%",
+      value: `${stats.averageScore.toFixed(1)}%`,
       icon: TrendingUp,
-      description: "+2.1% from last term",
+      description: "Across all quiz results",
     },
     {
       title: "Quizzes Held",
-      value: "48",
+      value: stats.totalQuizzes.toString(),
       icon: ClipboardList,
-      description: "12 in last 30 days",
+      description: "Published quizzes",
     },
     {
       title: "Passing Rate",
-      value: "94%",
+      value: `${stats.passingRate.toFixed(0)}%`,
       icon: GraduationCap,
-      description: "+1% from last year",
+      description: "Students scoring 40% or above",
     },
   ]
 
@@ -38,7 +41,7 @@ export default function AdminOverview() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
+        {statItems.map((stat) => (
           <Card key={stat.title} className="border-none shadow-sm bg-card/50 backdrop-blur-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
